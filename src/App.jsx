@@ -4,7 +4,8 @@ import {
   borderStyle,
   getWinningBoard,
   allSquaresAreOcupied,
-  updateBoard
+  updateBoard,
+  isFreshBoard,
 } from './helpers/board';
 import { getBestMove } from './helpers/ai';
 import X_image from './assets/X_02.png';
@@ -31,6 +32,14 @@ function App() {
   const [isAiTurn, setIsAiTurn] = useState(false);
   const [board, setBoard] = useState(getInitialBoard(BOARD_COORDS));
   const [turn, setTurn] = useState(X);
+
+  const resetGame = () => {
+    setGameIsOver(false);
+    setWinningHighlight(null);
+    setIsAiTurn(false);
+    setBoard(getInitialBoard(BOARD_COORDS));
+    setTurn(X);
+  };
 
   const handleClick = (clickedSq) => {
     if (winningHighlight) return;
@@ -78,6 +87,12 @@ function App() {
             );
           })}
         </div>
+        <div className='info-panel'>
+          {isFreshBoard(board) && (
+            <button onClick={() => setIsAiTurn(!isAiTurn)}>You go first</button>
+          )}
+          {gameIsOver && <button onClick={resetGame}>Play again</button>}
+        </div>
       </div>
     </div>
   );
@@ -87,8 +102,6 @@ export default App;
 
 /**
  * TODO:
- * Reset button when game is finished.
- * "You go first" button at start of game.
  * Delay for AI move.
  * Dissappearing oldest marks.
  */

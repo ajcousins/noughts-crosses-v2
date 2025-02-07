@@ -1,5 +1,6 @@
 .board-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   justify-items: center;
   align-items: center;
@@ -25,9 +26,15 @@
 }
 
 .highlight {
-  background-color: rgb(165, 216, 25);
+  background-color: var(--primary);
 }
 
 .highlight:hover {
-  background-color: rgb(165, 216, 25);
+  background-color: var(--primary);
+}
+
+.info-panel {
+  min-width: 2em;
+  margin-top: 2em;
+  height: 3rem;
 }

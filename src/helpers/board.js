@@ -58,3 +58,7 @@ export const updateBoard = (board, coord, mark) => {
 
 export const allSquaresAreOcupied = (board) =>
   board.reduce((acc, cur) => (cur.val !== null ? acc + 1 : acc), 0) === 9;
+
+export const isFreshBoard = (board) => {
+  return !board.some((sq) => sq.val !== null);
+};
