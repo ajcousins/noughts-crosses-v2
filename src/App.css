@@ -1,0 +1,33 @@
+.board-wrapper {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  height: 100dvh;
+}
+.board {
+  background-color: rgb(28, 29, 29);
+  display: grid;
+  grid-template-columns: repeat(3, 75px);
+  grid-template-rows: repeat(3, 75px);
+}
+
+.cell-container {
+  cursor: pointer;
+}
+
+.cell-container:hover {
+  background-color: rgb(41, 41, 41);
+}
+
+.cell-container > img {
+  width: 100%;
+}
+
+.highlight {
+  background-color: rgb(165, 216, 25);
+}
+
+.highlight:hover {
+  background-color: rgb(165, 216, 25);
+}
