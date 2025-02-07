@@ -4,24 +4,16 @@ export const getInitialBoard = (coords) =>
 export const borderStyle = (sq) => {
   const BORDER_STYLE = '2px solid white';
   let style = {};
-  if (sq.coord[0] === '0') {
+  if (sq.coord[0] === '0' || sq.coord[0] === '1') {
     style.borderBottom = BORDER_STYLE;
   }
-  if (sq.coord[0] === '1') {
-    style.borderTop = BORDER_STYLE;
-    style.borderBottom = BORDER_STYLE;
-  }
-  if (sq.coord[0] === '2') {
+  if (sq.coord[0] === '1' || sq.coord[0] === '2') {
     style.borderTop = BORDER_STYLE;
   }
-  if (sq.coord[1] === '0') {
+  if (sq.coord[1] === '0' || sq.coord[1] === '1') {
     style.borderRight = BORDER_STYLE;
   }
-  if (sq.coord[1] === '1') {
-    style.borderLeft = BORDER_STYLE;
-    style.borderRight = BORDER_STYLE;
-  }
-  if (sq.coord[1] === '2') {
+  if (sq.coord[1] === '1' || sq.coord[1] === '2') {
     style.borderLeft = BORDER_STYLE;
   }
   return style;
@@ -36,7 +28,7 @@ const boardsOverlap = (winningBoard, gameBoard) => {
   return false;
 };
 
-export const checkGameState = (board, mark) => {
+export const getWinningBoard = (board, mark) => {
   const winningBoards = [
     [1, 1, 1, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 1, 1, 0, 0, 0],

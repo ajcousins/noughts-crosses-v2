@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { getInitialBoard, borderStyle, checkGameState } from './helpers/board';
+import { getInitialBoard, borderStyle, getWinningBoard } from './helpers/board';
 import X_image from './assets/X_02.png';
 import O_image from './assets/O_02.png';
-
 import './App.css';
 
 const BOARD_COORDS = ['00', '01', '02', '10', '11', '12', '20', '21', '22'];
@@ -29,7 +28,7 @@ function App() {
     const newBoard = board.map((sq) =>
       sq.coord === clickedSq.coord ? { ...sq, val: turn } : sq
     );
-    const winner = checkGameState(newBoard, turn);
+    const winner = getWinningBoard(newBoard, turn);
     if (winner) {
       setWinningHighlight(winner);
     }
