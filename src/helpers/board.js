@@ -42,6 +42,19 @@ export const getWinningBoard = (board, mark) => {
   const reduced = board.map((sq) => (sq.val === mark ? 1 : 0));
   const winnerIndex = winningBoards.findIndex((b) => boardsOverlap(b, reduced));
 
-  if (winnerIndex === -1) return null;
-  return winningBoards[winnerIndex];
+  if (winnerIndex === -1)
+    return {
+      winningBoard: null,
+      mark: null,
+    };
+  return { winningBoard: winningBoards[winnerIndex], mark };
 };
+
+export const updateBoard = (board, coord, mark) => {
+  return board.map((sq) =>
+    sq.coord === coord.coord ? { ...sq, val: mark } : sq
+  );
+};
+
+export const allSquaresAreOcupied = (board) =>
+  board.reduce((acc, cur) => (cur.val !== null ? acc + 1 : acc), 0) === 9;

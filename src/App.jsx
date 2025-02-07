@@ -1,5 +1,12 @@
-import { useState } from 'react';
-import { getInitialBoard, borderStyle, getWinningBoard } from './helpers/board';
+import { useEffect, useState } from 'react';
+import {
+  getInitialBoard,
+  borderStyle,
+  getWinningBoard,
+  allSquaresAreOcupied,
+  updateBoard
+} from './helpers/board';
+import { getBestMove } from './helpers/ai';
 import X_image from './assets/X_02.png';
 import O_image from './assets/O_02.png';
 import './App.css';
@@ -19,22 +26,37 @@ const cellImage = (sq) => {
 };
 
 function App() {
+  const [gameIsOver, setGameIsOver] = useState(false);
   const [winningHighlight, setWinningHighlight] = useState(null);
+  const [isAiTurn, setIsAiTurn] = useState(false);
   const [board, setBoard] = useState(getInitialBoard(BOARD_COORDS));
   const [turn, setTurn] = useState(X);
 
   const handleClick = (clickedSq) => {
     if (winningHighlight) return;
-    const newBoard = board.map((sq) =>
-      sq.coord === clickedSq.coord ? { ...sq, val: turn } : sq
-    );
-    const winner = getWinningBoard(newBoard, turn);
-    if (winner) {
-      setWinningHighlight(winner);
+    const newBoard = updateBoard(board, clickedSq, turn);
+    const { winningBoard } = getWinningBoard(newBoard, turn);
+    if (winningBoard) {
+      setWinningHighlight(winningBoard);
+      setGameIsOver(true);
+    }
+    if (allSquaresAreOcupied(newBoard)) {
+      setGameIsOver(true);
     }
     setBoard(newBoard);
+    setIsAiTurn(!isAiTurn);
     setTurn(turn === X ? O : X);
   };
+
+  useEffect(() => {
+    if (!isAiTurn || gameIsOver) {
+      return;
+    }
+    const { bestMove } = getBestMove(board.map((sq) => (sq.val ? sq.val : '')));
+    handleClick(board[bestMove.move]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAiTurn]);
 
   return (
     <div>
@@ -62,3 +84,11 @@ function App() {
 }
 
 export default App;
+
+/**
+ * TODO:
+ * Reset button when game is finished.
+ * "You go first" button at start of game.
+ * Delay for AI move.
+ * Dissappearing oldest marks.
+ */
