@@ -15,6 +15,7 @@ import './App.css';
 const BOARD_COORDS = ['00', '01', '02', '10', '11', '12', '20', '21', '22'];
 const X = 'X';
 const O = 'O';
+const AI_DELAY_MILISECS = 500;
 
 const cellImage = (sq) => {
   if (sq.val === X) {
@@ -61,8 +62,10 @@ function App() {
     if (!isAiTurn || gameIsOver) {
       return;
     }
-    const { bestMove } = getBestMove(board.map((sq) => (sq.val ? sq.val : '')));
-    handleClick(board[bestMove.move]);
+    setTimeout(() => {
+      const { bestMove } = getBestMove(board.map((sq) => (sq.val ? sq.val : '')));
+      handleClick(board[bestMove.move]);
+    }, AI_DELAY_MILISECS)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAiTurn]);
@@ -102,6 +105,5 @@ export default App;
 
 /**
  * TODO:
- * Delay for AI move.
  * Dissappearing oldest marks.
  */
